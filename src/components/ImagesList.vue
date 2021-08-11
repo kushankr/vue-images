@@ -119,7 +119,6 @@ export default {
   
   .pagination {
     padding-top: 40px;
-    clear: left;
   }
   
   .pagination > button {

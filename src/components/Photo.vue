@@ -4,7 +4,7 @@
       <p>Image could not be loaded.</p>
     </div>
     <div v-else>
-      <img v-bind:src="photo.url_sq_cdn" v-on:error="imageLoadError" />
+      <img v-bind:src="photo.url_s_cdn" v-on:error="imageLoadError" />
     </div>
     <div class="photo-title">{{ photo.title }}</div>
   </div>
@@ -55,13 +55,16 @@ export default {
     box-shadow: 0 6px 27px #aeb4be;
     background-color: #FFFFFF;
     display: inline-block;
-    margin-right: 3%;
-    margin-left: 3%;
-    width: 10%;
-    height: 100px;
-    overflow: hidden;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 225px;
     cursor: pointer;
-    float: left;
+  }
+  
+  .card-container img {
+    height: 100%;
+    width: 100%;
+    display: block;
   }
   
   div.photo-title {
@@ -73,6 +76,11 @@ export default {
   
   .card-container:hover {
     background-color: #BCBDC0;
+  }
+  
+  .card-container:hover div.photo-title {
+    text-decoration: underline;
+    font-weight: bold;
   }
   
 </style>
