@@ -55,12 +55,13 @@ export default {
     box-shadow: 0 6px 27px #aeb4be;
     background-color: #FFFFFF;
     display: inline-block;
-    margin-right: 3%;
-    margin-left: 3%;
-    width: 12%;
+    margin-right: 4%;
+    margin-left: 4%;
+    width: 13%;
     height: 100px;
     overflow: hidden;
     cursor: pointer;
+    float: left;
   }
   
   div.photo-title {

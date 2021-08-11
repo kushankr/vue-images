@@ -1,5 +1,12 @@
 <template>
   <div class="container">
+    <h1>Image Gallery</h1>
+    <div class="search-box">
+      <label for="search">Search</label>
+      <input type="text" id="search" placeholder="Search by Titles" v-model="search">
+      <span class="filter-text">Displaying {{ imagesShown.start }} to {{ imagesShown.end }} of {{ filteredPhotos.length }} images</span>
+    </div>
+    <hr class="solid">
     <Photo v-for="photo in paginatedPhotos" v-bind:key="photo.id" v-bind:photo="photo"></Photo>
     <div class="pagination">
       <button v-bind:disabled="firstDisabled" v-on:click="firstPage">
@@ -46,25 +53,36 @@ export default {
         last: '>>',
         previous: '<',
         next: '>'
-      }
+      },
+      search: ''
     }
   },
   computed: {
     pageCount() {
-      let l = this.imagesData.photos.photo.length;
+      let l = this.filteredPhotos.length;
       let s = this.size;
       return Math.ceil(l/s);
     },
     paginatedPhotos() {
       const start = this.pageNumber * this.size;
       const end = start + this.size;
-      return this.imagesData.photos.photo.slice(start, end);
+      return this.filteredPhotos.slice(start, end);
     },
     firstDisabled() {
       return this.pageNumber === 0;
     },
     lastDisabled() {
       return this.pageNumber >= this.pageCount-1;
+    },
+    filteredPhotos() {
+      return this.imagesData.photos.photo.filter(photo => {
+        return photo.title.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
+    imagesShown() {
+      const start = this.pageNumber * this.size;
+      const end = Math.min(start + this.size, this.filteredPhotos.length);
+      return {start: start + 1, end: end};
     }
   },
   methods:{
@@ -81,16 +99,51 @@ export default {
       this.pageNumber = this.pageCount - 1;
     }
   },
+  watch: {
+    search: function() {
+      this.pageNumber = 0;
+    }
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .pagination {
+  
+  .container {
     margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  .pagination {
+    padding-top: 40px;
+    clear: left;
   }
   
   .pagination > button {
     cursor: pointer;
   }
+  
+  div.search-box {
+    margin-bottom: 20px;
+    text-align: left;
+    margin-left: 4%;
+  }
+  
+  div.search-box > label {
+    margin-right: 10px;
+  }
+  
+  hr.solid {
+    border-top: 1px solid #BCBDC0;
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+  
+  span.filter-text {
+    margin-left: 20px;
+  }
+  
 </style>

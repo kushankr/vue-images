@@ -1,4 +1,4 @@
-# ithaka-images
+# Project/Installation Instructions
 
 ## Task
 
