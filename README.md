@@ -29,3 +29,7 @@ npm install
 ```
 npm run serve
 ```
+
+### App running at
+
+http://localhost:8080/

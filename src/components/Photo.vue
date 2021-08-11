@@ -4,7 +4,7 @@
       <p>Image could not be loaded.</p>
     </div>
     <div v-else>
-      <img v-bind:src="photo.url_sq_cdn" v-on:error="imageLoadError" alt="/assets/loading.gif" />
+      <img v-bind:src="photo.url_sq_cdn" v-on:error="imageLoadError" />
     </div>
     <div class="photo-title">{{ photo.title }}</div>
   </div>
@@ -55,9 +55,9 @@ export default {
     box-shadow: 0 6px 27px #aeb4be;
     background-color: #FFFFFF;
     display: inline-block;
-    margin-right: 4%;
-    margin-left: 4%;
-    width: 13%;
+    margin-right: 3%;
+    margin-left: 3%;
+    width: 10%;
     height: 100px;
     overflow: hidden;
     cursor: pointer;

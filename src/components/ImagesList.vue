@@ -3,7 +3,7 @@
     <h1>Image Gallery</h1>
     <div class="search-box">
       <label for="search">Search</label>
-      <input type="text" id="search" placeholder="Search by Titles" v-model="search">
+      <input type="text" id="search" placeholder="Search by Title" v-model="search">
       <span class="filter-text">Displaying {{ imagesShown.start }} to {{ imagesShown.end }} of {{ filteredPhotos.length }} images</span>
     </div>
     <hr class="solid">
@@ -39,7 +39,7 @@ export default {
     size:{
       type: Number,
       required: false,
-      default: 8
+      default: 10
     }
   },
   components: {
@@ -129,17 +129,24 @@ export default {
   div.search-box {
     margin-bottom: 20px;
     text-align: left;
-    margin-left: 4%;
+    margin-left: 3%;
   }
   
   div.search-box > label {
-    margin-right: 10px;
+    margin-right: 5px;
+  }
+  
+  div.search-box > input#search {
+    width: 100px;
+    border: 1px solid #BCBDC0;
+    border-radius: 4px;
+    padding: 4px 6px;
   }
   
   hr.solid {
     border-top: 1px solid #BCBDC0;
-    margin-left: 4%;
-    margin-right: 4%;
+    margin-left: 3%;
+    margin-right: 3%;
   }
   
   span.filter-text {
