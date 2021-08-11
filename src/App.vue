@@ -24,6 +24,7 @@ export default {
 <style>
 body {
   background-color: #F2F3F6;
+  font-size: 16px;
 }
 
 #app {

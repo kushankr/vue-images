@@ -4,11 +4,11 @@
     <div class="search-box">
       <label for="search">Search</label>
       <input type="text" id="search" placeholder="Search by Title" v-model="search">
-      <span class="filter-text">Displaying {{ imagesShown.start }} to {{ imagesShown.end }} of {{ filteredPhotos.length }} images</span>
+      <span v-if="pageCount > 0" class="filter-text">Displaying {{ imagesShown.start }} to {{ imagesShown.end }} of {{ filteredPhotos.length }} images</span>
     </div>
     <hr class="solid">
     <Photo v-for="photo in paginatedPhotos" v-bind:key="photo.id" v-bind:photo="photo"></Photo>
-    <div class="pagination">
+    <div v-if="pageCount > 0" class="pagination">
       <button v-bind:disabled="firstDisabled" v-on:click="firstPage">
         {{ paginationSymbols.first }}
       </button>
@@ -22,6 +22,9 @@
       <button v-bind:disabled="lastDisabled" v-on:click="lastPage">
         {{ paginationSymbols.last }}
       </button>
+    </div>
+    <div v-else class="pagination">
+      No search results found.
     </div>
   </div>
 </template>
@@ -123,6 +126,15 @@ export default {
   
   .pagination > button {
     cursor: pointer;
+    border-radius: 4px;
+    border-color: #FFFFFF;
+    background-color: #FFFFFF;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+  .pagination > button:hover {
+    border-color: #BCBDC0;
+    background-color: #BCBDC0;
   }
   
   div.search-box {
@@ -136,7 +148,7 @@ export default {
   }
   
   div.search-box > input#search {
-    width: 100px;
+    width: 150px;
     border: 1px solid #BCBDC0;
     border-radius: 4px;
     padding: 4px 6px;
