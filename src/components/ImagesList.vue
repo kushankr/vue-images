@@ -1,14 +1,14 @@
 <template>
-  <div class="container">
+  <div id="images-list">
     <h1>Image Gallery</h1>
     <div class="search-box">
       <label for="search">Search</label>
       <input type="text" id="search" placeholder="Search by Title" v-model="search">
       <span v-if="pageCount > 0" class="filter-text">Displaying {{ imagesShown.start }} to {{ imagesShown.end }} of {{ filteredPhotos.length }} images</span>
     </div>
-    <hr class="solid">
+    <hr class="solid" />
     <Photo v-for="photo in paginatedPhotos" v-bind:key="photo.id" v-bind:photo="photo"></Photo>
-    <div v-if="pageCount > 0" class="pagination">
+    <div v-if="pageCount > 0" class="photos-pagination">
       <button v-bind:disabled="firstDisabled" v-on:click="firstPage">
         {{ paginationSymbols.first }}
       </button>
@@ -23,7 +23,7 @@
         {{ paginationSymbols.last }}
       </button>
     </div>
-    <div v-else class="pagination">
+    <div v-else class="photos-pagination">
       No search results found.
     </div>
   </div>
@@ -60,6 +60,16 @@ export default {
       search: ''
     }
   },
+  created() {
+    let photoMap = {};
+    for (let photo of this.imagesData.photos.photo) {
+      let key = photo.id;
+      let value = photo;
+      value.description = photo.description._content;
+      photoMap[key] = value;
+    }
+    this.$store.commit('setAllPhotosMap', photoMap);
+  },
   computed: {
     pageCount() {
       let l = this.filteredPhotos.length;
@@ -78,7 +88,7 @@ export default {
       return this.pageNumber >= this.pageCount-1;
     },
     filteredPhotos() {
-      return this.imagesData.photos.photo.filter(photo => {
+      return Object.values(this.$store.state.allPhotosMap).filter(photo => {
         return photo.title.toLowerCase().includes(this.search.toLowerCase());
       });
     },
@@ -113,26 +123,30 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   
-  .container {
+  #images-list {
     margin-top: 20px;
     margin-bottom: 20px;
     margin-left: 10px;
     margin-right: 10px;
+    text-align: center;
   }
   
-  .pagination {
-    padding-top: 40px;
+  .photos-pagination {
+    padding-top: 20px;
   }
   
-  .pagination > button {
+  .photos-pagination > button {
     cursor: pointer;
+    webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
     border-radius: 4px;
     border-color: #FFFFFF;
     background-color: #FFFFFF;
     margin-left: 2px;
     margin-right: 2px;
   }
-  .pagination > button:hover {
+  
+  .photos-pagination > button:hover {
     border-color: #BCBDC0;
     background-color: #BCBDC0;
   }
@@ -140,7 +154,7 @@ export default {
   div.search-box {
     margin-bottom: 20px;
     text-align: left;
-    margin-left: 3%;
+    margin-left: 5%;
   }
   
   div.search-box > label {
@@ -150,6 +164,8 @@ export default {
   div.search-box > input#search {
     width: 150px;
     border: 1px solid #BCBDC0;
+    webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
     border-radius: 4px;
     padding: 4px 6px;
   }

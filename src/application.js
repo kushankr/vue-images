@@ -5,6 +5,12 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    allPhotosMap: {}
+  },
+  mutations: {
+    setAllPhotosMap(state, payload) {
+      state.allPhotosMap = Object.assign({}, state.allPhotosMap, payload);
+    }
   }
 });
 
