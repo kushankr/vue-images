@@ -8,45 +8,53 @@
             <h3>{{ photo.title }}</h3>
           </div>
           <hr class="solid" />
-          <div class="modal-body">
-            <div class="form-group">
-              <label for="photo-sq">Photo</label>
-              <img id="photo-sq" v-bind:src="photo.url_sq_cdn" />
+          <form id="app" v-on:submit.prevent="submitForm" novalidate="true">
+            <div class="modal-body">
+              <p v-if="formErrors.length">
+                <b>Please correct the following error(s):</b>
+                <ul>
+                  <li v-for="(error, index) in formErrors" v-bind:key="`form-error-${index}`">{{ error }}</li>
+                </ul>
+              </p>
+              <div class="form-group">
+                <label for="photo-sq">Photo</label>
+                <img id="photo-sq" v-bind:src="photo.url_sq_cdn" />
+              </div>
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" v-model="selectedPhoto.title">
+              </div>
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" v-model="selectedPhoto.description"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="public-domain">Public Domain</label>
+                <input type="checkbox" id="public-domain" name="public-domain" v-model="selectedPhoto.ispublic">
+              </div>
+              <div class="form-group">
+                <label for="photo-id">ID</label>
+                <span id="photo-id">{{ photo.id}}</span>
+              </div>
+              <div class="form-group">
+                <label for="owner-name">Owner Name</label>
+                <span id="owner-name">{{ photo.ownername }}</span>
+              </div>
+              <div class="form-group">
+                <label for="image-dim">Image Dimensions</label>
+                <span id="image-dim">{{ photo.width_s }} &#215; {{ photo.height_s }}</span>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" id="title" name="title" v-model="selectedPhoto.title">
+            <hr class="solid" />
+            <div class="modal-footer">
+              <button type="submit" class="modal-default-button">
+                Save
+              </button>
+              <button type="button" class="modal-default-button" v-on:click="cancelChanges">
+                Cancel
+              </button>
             </div>
-            <div class="form-group">
-              <label for="description">Description</label>
-              <textarea id="description" name="description" v-model="selectedPhoto.description"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="public-domain">Public Domain</label>
-              <input type="checkbox" id="public-domain" name="public-domain" v-model="selectedPhoto.ispublic">
-            </div>
-            <div class="form-group">
-              <label for="photo-id">ID</label>
-              <span id="photo-id">{{ photo.id}}</span>
-            </div>
-            <div class="form-group">
-              <label for="owner-name">Owner Name</label>
-              <span id="owner-name">{{ photo.ownername }}</span>
-            </div>
-            <div class="form-group">
-              <label for="image-dim">Image Dimensions</label>
-              <span id="image-dim">{{ photo.width_s }} &#215; {{ photo.height_s }}</span>
-            </div>
-          </div>
-          <hr class="solid" />
-          <div class="modal-footer">
-            <button class="modal-default-button" v-on:click="editPhoto">
-              Save
-            </button>
-            <button class="modal-default-button" v-on:click="cancelChanges">
-              Cancel
-            </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -59,7 +67,8 @@ export default {
   name: 'PhotoModal',
   data() {
     return {
-      selectedPhoto: {}
+      selectedPhoto: {},
+      formErrors: []
     }
   },
   props: {
@@ -72,6 +81,16 @@ export default {
     this.selectedPhoto = Object.assign({}, this.photo);
   },
   methods: {
+    submitForm() {
+      this.formErrors = [];
+      if (!this.selectedPhoto.title) {
+        this.formErrors.push("Title required.");
+      }
+      if (this.formErrors.length > 0) {
+        return true;
+      }
+      this.editPhoto();
+    },
     editPhoto() {
       let allPhotosMap = {};
       allPhotosMap[this.selectedPhoto.id] = this.selectedPhoto;
