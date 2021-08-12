@@ -3,7 +3,7 @@
     <h1>Image Gallery</h1>
     <div class="search-box">
       <label for="search">Search</label>
-      <input type="text" id="search" placeholder="Search by Title or Description" v-model="search">
+      <input type="text" id="search" placeholder="Search by Title/Description" v-model="search">
       <span v-if="pageCount > 0" class="filter-text">Displaying {{ imagesShown.start }} to {{ imagesShown.end }} of {{ filteredPhotos.length }} images</span>
     </div>
     <hr class="solid" />
