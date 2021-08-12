@@ -3,7 +3,7 @@
     <h1>Image Gallery</h1>
     <div class="search-box">
       <label for="search">Search</label>
-      <input type="text" id="search" placeholder="Search by Title" v-model="search">
+      <input type="text" id="search" placeholder="Search by Title or Description" v-model="search">
       <span v-if="pageCount > 0" class="filter-text">Displaying {{ imagesShown.start }} to {{ imagesShown.end }} of {{ filteredPhotos.length }} images</span>
     </div>
     <hr class="solid" />
@@ -89,7 +89,8 @@ export default {
     },
     filteredPhotos() {
       return Object.values(this.$store.state.allPhotosMap).filter(photo => {
-        return photo.title.toLowerCase().includes(this.search.toLowerCase());
+        return photo.title.toLowerCase().includes(this.search.toLowerCase()) || 
+               photo.description.toLowerCase().includes(this.search.toLowerCase());
       });
     },
     imagesShown() {
@@ -162,7 +163,7 @@ export default {
   }
   
   div.search-box > input#search {
-    width: 150px;
+    width: 200px;
     border: 1px solid #BCBDC0;
     webkit-border-radius: 4px;
     -moz-border-radius: 4px;
