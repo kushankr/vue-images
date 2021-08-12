@@ -18,7 +18,8 @@
               </p>
               <div class="form-group">
                 <label for="photo-sq">Photo</label>
-                <img id="photo-sq" v-bind:src="photo.url_sq_cdn" />
+                <span v-if="image.error" id="photo-sq">Image could not be loaded.</span>
+                <img v-else id="photo-sq" v-bind:src="photo.url_sq_cdn" v-on:error="imageLoadError" />
               </div>
               <div class="form-group">
                 <label for="title">Title</label>
@@ -68,7 +69,10 @@ export default {
   data() {
     return {
       selectedPhoto: {},
-      formErrors: []
+      formErrors: [],
+      image: {
+        error: false
+      }
     }
   },
   props: {
@@ -100,6 +104,9 @@ export default {
     },
     cancelChanges() {
       this.$emit('hide-modal');
+    },
+    imageLoadError() {
+      this.image.error = true;
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="photo-content">
     <div class="card-container" v-on:click="showPhotoModal">
-      <div v-if="status.error" class="image-content">
+      <div v-if="image.error" class="image-content">
         <div id="image-error-msg">Image could not be loaded.</div>
       </div>
       <div v-else>
@@ -19,7 +19,7 @@ export default {
   name: 'Photo',
   data() {
     return {
-      status: {
+      image: {
         error: false
       },
       modalVisible: false
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     imageLoadError() {
-      this.status.error = true;
+      this.image.error = true;
     },
     showPhotoModal()  {
       this.modalVisible = true;
