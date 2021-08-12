@@ -35,7 +35,7 @@
             </div>
             <div class="form-group">
               <label for="image-dim">Image Dimensions</label>
-              <span id="image-dimensions">{{ photo.width_s }} &#215; {{ photo.height_s }}</span>
+              <span id="image-dim">{{ photo.width_s }} &#215; {{ photo.height_s }}</span>
             </div>
           </div>
           <hr class="solid" />
@@ -69,11 +69,11 @@ export default {
     }
   },
   created() {
-    this.selectedPhoto = Object.assign({}, this.selectedPhoto, this.photo);
+    this.selectedPhoto = Object.assign({}, this.photo);
   },
   methods: {
     editPhoto() {
-      let allPhotosMap = Object.assign({}, this.$store.state.allPhotosMap);
+      let allPhotosMap = {};
       allPhotosMap[this.selectedPhoto.id] = this.selectedPhoto;
       this.$store.commit('setAllPhotosMap', allPhotosMap);
       // A put API call to also update the database
@@ -148,17 +148,8 @@ export default {
   }
   
   .modal-footer {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
-
-  /*
-   * The following styles are auto-applied to elements with
-   * transition="modal" when their visibility is toggled
-   * by Vue.js.
-   *
-   * You can easily play with the modal transition by editing
-   * these styles.
-   */
 
   .modal-enter {
     opacity: 0;
