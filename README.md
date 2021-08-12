@@ -27,7 +27,7 @@ for details.
 
 ## Project setup
 
-To begin, fork this repo and then clone those contents down! (git clone https://github.com/kushankr/ithaka-images.git)
+To begin, clone this repo (git clone https://github.com/kushankr/ithaka-images.git)
 ```
 cd ithaka-images
 npm install
